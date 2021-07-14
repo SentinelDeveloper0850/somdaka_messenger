@@ -1,0 +1,64 @@
+type Funeral @model {
+  id: ID!
+  firstnames: String!
+  lastname: String!
+  address: String!
+  phone: String!
+  cemetery: String
+  coffin: String
+  burialDateTime: String
+  deliveryDateTime: String
+  bathingDateTime: String
+  programmeCount: Int
+  isClaim: Boolean
+  notes: String
+  crew: [FuneralCrew]
+  tasks: [Task] @connection(keyName: "byFuneral", fields: ["id"])
+}
+
+type FuneralCrew @model {
+  id: ID!
+  name: String!
+  drivers: [Driver]
+}
+
+type Driver @model {
+  id: ID!
+  firstnames: String!
+  nickname: String
+  lastname: String
+  address: String
+  phone: String!
+  email: String
+  term: String!
+}
+
+type Presentation @model {
+  id: ID!
+  societyName: String
+  contactPerson: String
+  address: String!
+  phone: String!
+  dateTime: String!
+}
+
+type Task @model 
+  @key(name: "byFuneral", fields: ["funeralID", "name"]) {
+  id: ID!
+  name: String!
+  description: String
+  category: String
+  startDate: String
+  endDate: String
+  assignee: String
+  funeralID: ID!
+  author: String
+  status: String
+}
+
+type Message @model {
+  id: ID!
+  messageBody: String!
+  recipients: String!
+  status: String
+}
